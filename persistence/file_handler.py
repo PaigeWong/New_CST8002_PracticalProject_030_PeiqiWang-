@@ -66,17 +66,17 @@ def load_data_from_csv(csv_file_path):
         cursor = conn.cursor()
         cursor.execute("SELECT COUNT(*) FROM records")
         record_count = cursor.fetchone()[0]
-        if record_count >= 100:
-            print("Database already populated with 100 records, skipping CSV load.")
-            return
+        #if record_count >= 100:
+         #   print("Database already populated with 100 records, skipping CSV load.")
+         #   return
 
         try:
             with open(csv_file_path, "r", encoding="utf-8") as file:
                 reader = csv.DictReader(file)
                 count = record_count
                 for row in reader:
-                    if count >= 100:
-                        break
+                    #if count >= 100:
+                        #break
                     cursor.execute(
                         "INSERT INTO records (csduid, csd, period, description, unit, value) VALUES (%s, %s, %s, %s, %s, %s)",
                         (
@@ -113,8 +113,8 @@ def reset_database(csv_file_path):
                 reader = csv.DictReader(file)
                 count = 0
                 for row in reader:
-                    if count >= 100:
-                        break
+                    #if count >= 100:
+                     #   break
                     cursor.execute(
                         "INSERT INTO records (csduid, csd, period, description, unit, value) VALUES (%s, %s, %s, %s, %s, %s)",
                         (

@@ -53,7 +53,8 @@ def main():
         print("4. Edit a Data")
         print("5. Delete a Data")
         print("6. Reset Database to 100 Records")
-        print("7. Exit")
+        print("7. Visualize Data")
+        print("8. Exit")
 
         choice = input("Enter choice: ").strip()
 
@@ -101,11 +102,47 @@ def main():
             reset_database(file_path)
 
         elif choice == "7":
+            print("Select chart type:")
+            print("1. Vertical Bar Chart")
+            print("2. Horizontal Bar Chart")
+            print("3. Pie Chart")
+            chart_choice = input("Enter chart type number: ")
+
+            chart_map = {"1": "bar", "2": "hbar", "3": "pie"}
+            chart_type = chart_map.get(chart_choice, "bar")
+
+            print("Group data by:")
+            print("1. CSD")
+            print("2. Description")
+            print("3. Period")
+            print("4. Unit")
+            print("5. CSDUID")
+            print("6. Value")
+            group_choice = input("Enter grouping column: ")
+
+            group_map = {
+                "1": "csd",
+                "2": "description",
+                "3": "period",
+                "4": "unit",
+                "5": "csduid",
+                "6": "value"
+            }
+
+            group_by = group_map.get(group_choice, "csd")
+
+            from persistence.file_handler import fetch_all_records
+            from business.manager import visualize_data
+
+            records = fetch_all_records()
+            visualize_data(records, chart_type=chart_type, group_by=group_by)
+
+        elif choice == "8":
             print("Exiting program. Goodbye!")
             break
 
         else:
-            print("Invalid choice. Please enter a number between 1 and 7.")
+            print("Invalid choice. Please enter a number between 1 and 8.")
 
 if __name__ == "__main__":
     main()
